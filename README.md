@@ -1,0 +1,2 @@
+# translateToNyaan
+つらいときにつぶやける機能を提供するTweetDeck拡張機能

@@ -9,13 +9,11 @@ function requestJson(text) {
             console.log(json.response);
             let tweetTextArea = document.querySelector(".compose-content .js-compose-text");
             tweetTextArea.value = json.response;
+            $('textarea.js-compose-text')[0].dispatchEvent(new Event('change'));
             tweetTextArea.focus()
             let length = tweetTextArea.value.length
             tweetTextArea.selectionStart = length;
             tweetTextArea.selectionEnd = length;
-            $('textarea').trigger(
-                jQuery.Event( 'keydown', { keyCode: 13, which: 13 } )
-                );
         }
     };
     xhr.send();

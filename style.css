@@ -1,6 +1,6 @@
 #filter-button{
         background-color:#80c0a0;
-        width: 85px;
+        width:85px;
 }
 #filter-button.is-disabled{
     color: #AED6C2;

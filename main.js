@@ -1,10 +1,10 @@
 let nyaanInitText = "< Nyaan";
+let nyaanInitColor = "#80c0a0";
 
 run();
 function run() {
     let tweetButton = document.querySelector("button.js-send-button");//jqueryオブジェクトにするとobserve出来ない
     if (tweetButton == null) {
-        console.log("retry")
         setTimeout(run, 1500);
         return;
     }
@@ -44,6 +44,7 @@ function run() {
             filterButton.text("")
         }
         else {
+            filterButton.css({"background-color":nyaanInitColor})
             filterButton.text(nyaanInitText)
         }
     })
@@ -53,36 +54,34 @@ function run() {
     });
 }
 
+function translateToNyaan() {
+    if (!$('#filter-button').hasClass('is-disabled')) {
+        let tweetTextArea = $('textarea.js-compose-text')[0];
+        requestJson(tweetTextArea.value);
+    }
+}
 
 function requestJson(text) {
     let requestUrl = "https://socialityfilter.takanakahiko.me/?text=" + text;
     let xhr = new XMLHttpRequest();
     let filterButton = $("#filter-button");
     xhr.open("GET", requestUrl, true);
+    filterButton.css({"background-color":nyaanInitColor})
     filterButton.text("Nyaaning...")
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 let json = JSON.parse(xhr.responseText);
                 json = JSON.parse(json);//chromeで受け取る値だと2回パースする必要がある形になってしまうため
-                console.log(json.response)
                 let tweetTextArea = $('textarea.js-compose-text')[0];
                 tweetTextArea.value = json.response;
                 tweetTextArea.dispatchEvent(new Event('change'));
-                console.log(filterButton)
                 filterButton.text("Success!")
             } else {
+                filterButton.css({"background-color":"#F14C4A"})
                 filterButton.text("Failed")
             }
         }
     };
     xhr.send();
-}
-
-function translateToNyaan() {
-    if (!$('#filter-button').hasClass('is-disabled')) {
-        console.log("OK")
-        let tweetTextArea = $('textarea.js-compose-text')[0];
-        requestJson(tweetTextArea.value);
-    }
 }

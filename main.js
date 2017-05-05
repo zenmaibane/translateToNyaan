@@ -32,6 +32,7 @@ function run() {
         } else {
             filterButton.removeClass("is-disabled")
         }
+        filterButton.css({"background-color":nyaanInitColor})
     });
     tweetButtonObserver.observe(tweetButton, {
         'attributes': true,

@@ -1,3 +1,6 @@
 #filter-button{
-        /*background-color: rgba(255, 255, 255, 0.098);*/
+        background-color:#80c0a0;
+}
+#filter-button.is-disabled{
+    color: #AED6C2;
 }

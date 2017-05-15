@@ -73,7 +73,6 @@ function requestJson(text) {
         if (xhr.readyState === 4) {
             if (xhr.status == 200 || xhr.status == 304) {
                 let json = JSON.parse(xhr.responseText);
-                json = JSON.parse(json);//chromeで受け取る値だと2回パースする必要がある形になってしまうため
                 let tweetTextArea = $('textarea.js-compose-text')[0];
                 tweetTextArea.value = json.response;
                 tweetTextArea.dispatchEvent(new Event('change'));

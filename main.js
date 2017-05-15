@@ -5,7 +5,6 @@ function requestJson(text) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             let json = JSON.parse(xhr.responseText);
-            json = JSON.parse(json);
             console.log(json.response);
             let tweetTextArea = document.querySelector(".compose-content .js-compose-text");
             tweetTextArea.value = json.response;

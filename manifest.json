@@ -1,6 +1,11 @@
 {
-  "name": "SocialityFilterTweet",
-  "version": "0.0.1",
+  "name": "translateToNyaan",
+  "version": "1.0.0",
+  "icons": {
+    "16": "cat16.png",
+    "48": "cat48.png",
+    "128": "cat128.png"
+    },
   "manifest_version": 2,
   "content_scripts": [{
     "matches": [ "https://tweetdeck.twitter.com/*" ],

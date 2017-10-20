@@ -67,8 +67,10 @@ function run() {
 function translateToNyaan() {
     if (!$('#filter-button').hasClass('is-disabled')) {
         const tweetTextArea = $('textarea.js-compose-text')[0];
-        requestJson(tweetTextArea.value, function () {
+        const textAreaValue = tweetTextArea.value;
+        requestJson(textAreaValue, function () {
             const json = JSON.parse(this.responseText);
+            if(textAreaValue === json.response) return;
             tweetTextArea.value = json.response;
             tweetTextArea.dispatchEvent(new Event('change'));
         });

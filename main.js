@@ -54,6 +54,14 @@ function run() {
         "attributes": true,
         "attributeFilter": ["disabled"]
     });
+
+    let oldTweetArea = "";
+    $($('textarea.js-compose-text')[0]).on("input", function () {
+        if (oldTweetArea !== this.value) {
+            translateToNyaan();
+            oldTweetArea = this.value;
+        }
+    });
 }
 
 function translateToNyaan() {

@@ -29,11 +29,11 @@ function run() {
     const tweetButtonObserver = new MutationObserver(function () {
         if (tweetButton.classList.contains("is-disabled")) {
             filterButton.addClass("is-disabled");
-            filterButton.text(nyaanInitText)
+            filterButton.text(nyaanInitText);
         } else {
-            filterButton.removeClass("is-disabled")
+            filterButton.removeClass("is-disabled");
         }
-        filterButton.css({"background-color": nyaanInitColor})
+        filterButton.css({"background-color": nyaanInitColor});
     });
     tweetButtonObserver.observe(tweetButton, {
         'attributes': true,
@@ -43,7 +43,7 @@ function run() {
     const tweetTextArea = document.querySelector("textarea.js-compose-text");//jqueryオブジェクトにするとobserve出来ない
     const tweetObserver = new MutationObserver(function () {
         if (tweetTextArea.disabled) {
-            filterButton.text("")
+            filterButton.text("");
         }
         else {
             filterButton.css({"background-color": nyaanInitColor});

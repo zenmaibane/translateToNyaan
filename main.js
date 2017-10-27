@@ -3,7 +3,7 @@ const nyaanInitColor = "#80c0a0";
 
 run();
 
-function run() {
+async function run() {
     const tweetButton = document.querySelector("button.js-send-button");//jqueryオブジェクトにするとobserve出来ない
     if (tweetButton === null) {
         setTimeout(run, 1500);
@@ -55,12 +55,11 @@ function run() {
         "attributeFilter": ["disabled"]
     });
 
-    let oldTweetArea = "";
-    $($('textarea.js-compose-text')[0]).on("input", function () {
-        if (oldTweetArea !== this.value) {
-            translateToNyaan();
-            oldTweetArea = this.value;
-        }
+    requestList(function () {
+        const json = JSON.parse(this.responseText);
+        $($('textarea.js-compose-text')[0]).highlightWithinTextarea({
+            highlight: json.response
+        });
     });
 }
 
@@ -70,9 +69,10 @@ function translateToNyaan() {
         const textAreaValue = tweetTextArea.value;
         requestJson(textAreaValue, function () {
             const json = JSON.parse(this.responseText);
-            if(textAreaValue === json.response) return;
+            if (textAreaValue === json.response) return;
             tweetTextArea.value = json.response;
             tweetTextArea.dispatchEvent(new Event('change'));
+            $(tweetTextArea).highlightWithinTextarea('update');
         });
     }
 }
@@ -92,6 +92,22 @@ function requestJson(text, callback) {
             } else {
                 filterButton.css({"background-color": "#F14C4A"});
                 filterButton.text("Failed");
+            }
+        }
+    };
+
+    xhr.open("GET", requestUrl, true);
+    xhr.send();
+}
+
+function requestList(callback) {
+    const requestUrl = "https://socialityfilter.takanakahiko.me/?list=true";
+    const xhr = new XMLHttpRequest();
+    xhr.callback = callback;
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200 || xhr.status === 304) {
+                xhr.callback.apply(this);
             }
         }
     };
